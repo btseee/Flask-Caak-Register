@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <!--Font awesome-->
+    <script src="https://kit.fontawesome.com/89b97cecb7.js" crossorigin="anonymous"></script>
+    {% if title %}
+    <title>Caak - {{ title }}</title>
+    {% else %}
+    <title>Caak</title>
+    {% endif %}
+</head>
+<nav class="navbar navbar-expand-lg shadow-sm bg-white">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            {% if current_user.isAdmin %}
+            <li class="nav-item active mx-1">
+                <a role="button" class="nav-link btn btn-outline-primary border-0"
+                    href="{{ url_for('admin_register') }}"><i class="fas fa-user-plus"></i> Ажилтан нэмэх</a>
+            </li>
+            <li class="nav-item mx-1">
+                <a role="button" class="nav-link btn btn-outline-primary border-0" href="{{ url_for('approve') }}"><i
+                        class="fas fa-user-check"></i> Хүсэлт</span></a>
+            </li>
+            {% endif %}
+            <li class="nav-item mx-1">
+                <a role="button" class="nav-link btn btn-outline-primary border-0" href="{{ url_for('account') }}"><i
+                        class="fas fa-user-alt"></i> Хувийн мэдээлэл</a>
+            </li>
+            <li class="nav-item mx-1">
+                <a role="button" class="nav-link" href="{{ url_for('home') }}">Буцах</a>
+            </li>
+            <li class="nav-item active mx-1">
+                <a role="button" class="nav-link btn btn-outline-primary border-0" href="{{ url_for('logout') }}"><i
+                        class="fas fa-sign-out-alt"></i> Гарах</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<body class="bg-light">
+    <div class="container py-3">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{category}} w-50 mx-auto mb-1 alert-dismissible fade show">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <div class="border shadow-sm rounded bg-white w-50 my-auto mx-auto p-3">
+            <form method="POST" class="" action="">
+                <!--CRSF token-->
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+
+                    <legend class="border-bottom">Чөлөө авах</legend>
+                    <div class="alert alert-info p-3">Чөлөө авах шалтгаан болон хэзээ авах өдрөө бүгдийг нь тодорхой бичнэ үү.</div>
+                    <!--Чөлөө авах шалтгаан-->
+                    <div class="form-group">
+                        {{ form.post.label(class="form-control-label") }}
+                        {% if form.post.errors %}
+                        {{ form.post(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.post.errors %}
+                            <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.post(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <!--Хэзээ чөлөө авах-->
+                    <div class="form-group">
+                        {{ form.date.label(class="form-control-label") }}
+                        <small class="text-muted">Дараах хэлбэрээр бичнэ. 6/28 </small>
+                        {% if form.date.errors %}
+                        {{ form.date(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.date.errors %}
+                            <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.date(class="form-control") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-primary btn-lg btn-block  mt-5 mb-3") }}
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

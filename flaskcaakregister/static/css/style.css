@@ -1,0 +1,20 @@
+.img-pro {
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 50%;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: lightblue;
+  }
+
+.grow { 
+    transition: all .2s ease-in-out;
+}
+.grow:hover { 
+    transform: scale(1.1); 
+}
+
+th{
+    font-weight: bold;
+}

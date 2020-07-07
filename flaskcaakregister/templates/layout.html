@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <!--Font awesome-->
+    <script src="https://kit.fontawesome.com/89b97cecb7.js" crossorigin="anonymous"></script>
+    {% if title %}
+    <title>Caak - {{ title }}</title>
+    {% else %}
+    <title>Caak</title>
+    {% endif %}
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg shadow-sm bg-white">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                {% if current_user.isAdmin %}
+                <li class="nav-item active mx-1">
+                    <a role="button" class="nav-link btn btn-outline-primary border-0"
+                        href="{{ url_for('admin_register') }}"><i class="fas fa-user-plus"></i> Ажилтан нэмэх</a>
+                </li>
+                {% if request != 0 %}
+                <li class="nav-item mx-1">
+                    <a role="button" class="nav-link btn btn-outline-primary border-0" href="{{ url_for('approve')}}"><i
+                            class="fas fa-user-check"></i>
+                        Хүсэлт <span class="badge badge-primary">{{ request }}</span></a>
+                </li>
+                {% else %}
+                <li class="nav-item mx-1">
+                    <a role="button" class="nav-link btn btn-outline-primary border-0"
+                        href="{{ url_for('approve') }}"><i class="fas fa-user-check"></i> Хүсэлт</span></a>
+                </li>
+                {% endif %}
+                {% endif %}
+                <li class="nav-item mx-1">
+                    <a role="button" class="nav-link btn btn-outline-primary border-0"
+                        href="{{ url_for('absence') }}"><i class="fas fa-bed"></i> Чөлөө авах</a>
+                </li>
+                <li class="nav-item mx-1">
+                    <a role="button" class="nav-link btn btn-outline-primary border-0"
+                        href="{{ url_for('account') }}"><i class="far fa-address-card"></i> Хувийн мэдээлэл</a>
+                </li>
+                <li class="nav-item mx-1">
+                    <a role="button" class="nav-link btn btn-outline-primary border-0"
+                        href="{{ url_for('home') }}">Буцах</a>
+                </li>
+                <li class="nav-item active mx-1">
+                    <a role="button" class="nav-link btn btn-outline-primary border-0" href="{{ url_for('logout') }}"><i
+                            class="fas fa-sign-out-alt"></i> Гарах</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    {% block main %}
+    {% endblock %}
+</body>
+
+</html>

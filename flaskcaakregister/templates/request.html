@@ -1,0 +1,123 @@
+{% extends "layout.html" %}
+{%block main%}
+<div class="container">
+    <div class="row">
+        <div class="col d-flex justify-content-between border-bottom py-3">
+            <h1 class="align-self-center text-left pb-3">Хаяг нээх хүсэлтүүд</h1>
+            <a role="button" href="{{ url_for('admin_register') }}" class="align-self-center btn btn-outline-primary"><i
+                    class="fas fa-user-plus"></i> Ажилтан нэмэх</a>
+        </div>
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{category}} mx-auto mb-1 alert-dismissible fade show">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    {% if users %}
+    <div class="row my-3">
+        <div class="alert alert-info alert-dismissible fade show">Бөглөөгүй үдлсэн байгаа
+            мэдээллүүдийг
+            бөглөж дуусгаснаар хаяг идэвхжих болно. Хэрэв энэ хаягийг зөвшөөрөхгүй бол устгах
+            товчин дээр дарна уу.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+        </div>
+        {%for user in users%}
+        <form method="POST" class="col-6 mx-auto" action="">
+            {{ form.hidden_tag() }}
+            <div class="card mx-auto my-2 border-0 shadow-sm">
+                <fieldset class="form-group rounded card-body">
+                    <legend class="border-bottom text-center pb-2">Ажилтаны мэдээлэл</legend>
+                    <div class="form-group row pt-0 pb-2 border-bottom">
+                        <label for="staticName" class="col-sm-6 col-form-label">Нэр</label>
+                        <div class="col-sm-6">
+                            <input type="text" readonly class="form-control-plaintext font-weight-bold" id="staticName"
+                                value="{{ user.fname }}">
+                        </div>
+                        <label for="staticLame" class="col-sm-6 col-form-label">Овог</label>
+                        <div class="col-sm-6">
+                            <input type="text" readonly class="form-control-plaintext font-weight-bold" id="staticLame"
+                                value="{{ user.lname }}">
+                        </div>
+                        <label for="staticEmail" class="col-sm-6 col-form-label">Цахим шуудан</label>
+                        <div class="col-sm-6">
+                            <input type="text" readonly class="form-control-plaintext font-weight-bold" id="staticEmail"
+                                value="{{ user.email }}">
+                        </div>
+                        <label for="staticPhone" class="col-sm-6 col-form-label">Утасны дугаар</label>
+                        <div class="col-sm-6">
+                            <input type="text" readonly class="form-control-plaintext font-weight-bold" id="staticPhone"
+                                value="{{ user.phone }}">
+                        </div>
+                    </div>
+                    <small class="text-muted text-center font-weight-bold p-2">Ажилтаны ажлын баг болон нийт ажиллах
+                        цаг, эхлэх цагийг бөглөнө үү.</small>
+                    <!--Bag haana ajillah we-->
+                    <div class="form-group">
+                        {{form.team_name.label(class="form-control-label text-center")}}
+                        {% if form.team_name.errors %}
+                        {{ form.team_name(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.team_name.errors %}
+                            <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.team_name(class="form-control w-75 mx-auto") }}
+                        {% endif %}
+                    </div>
+                    <!--Niit ajillah cag-->
+                    <div class="form-group">
+                        {{form.total_hour.label(class="form-control-label text-center")}}
+                        {% if form.total_hour.errors %}
+                        {{ form.total_hour(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.total_hour.errors %}
+                            <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.total_hour(class="form-control w-75 mx-auto") }}
+                        {% endif %}
+                    </div>
+                    <!--Hezee ehleh we-->
+                    <div class="form-group">
+                        {{form.start_time.label(class="form-control-label text-center")}}
+                        <small id="start_time_help" class="text-muted">Дараах хэлбэрээр
+                            бичнэ: 13:56</small>
+                        {% if form.start_time.errors %}
+                        {{ form.start_time(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.start_time.errors %}
+                            <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.start_time(class="form-control w-75 mx-auto") }}
+                        {% endif %}
+                    </div>
+                    <div class="w-50 mx-auto">
+                        <button value="yes" name="submit" type="submit"
+                            class="btn btn-outline-success">Зөвшөөрөх</button>
+                        <button value="no" name="submit" type="submit" class="btn btn-outline-danger">Татгалзах</button>
+                    </div>
+                </fieldset>
+            </div>
+        </form>
+        {% endfor %}
+        {% else %}
+        <div class="card mx-auto border-0 my-3">
+            <div class="card-body shadow-sm">
+                <h1 class="card-title text-center">Шинэ хүсэлт байхгүй байна.</h1>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

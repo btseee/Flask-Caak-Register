@@ -1,0 +1,172 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<div class="container-fluid px-3 mt-4">
+    {% with messages = get_flashed_messages(with_categories = true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{category}} alert-dismissible fade show w-50 mx-auto">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="row">
+        <div class="col-2">
+            <div class="card border-0 shadow-sm">
+                <a href="{{ url_for('account') }}">
+                    <img src="{{url_for('static', filename = 'img/' + current_user.image_file)}}" alt=""
+                        class="card-img-top"> </a>
+                <div class="card-body">
+                    <div class="d-flex flex-column ">
+                        {% if current_user.isAdmin %}
+                        <small class="card-text mb-1"><span class="card-text text-success">
+                                Админ</small>
+                        </span>
+                        {% else %}
+                        <small class="card-text mb-1"><span class="card-text text-primary">
+                                Ажилтан</small>
+                        </span>
+                        {% endif %}
+
+                        <small class="card-text mb-1">Нэр: <span class="text-success">{{ current_user.fname }} </span></small>
+                        <small class="card-text mb-1">Баг: <a href="" class="text-primary">{{ current_user.tname.team_name }}</a></small>
+                        <small class="card-text mb-1">Статус: <span
+                                class="text-{{acc_status}} text-success">{{current_user.status}}</span></small>
+                        <small class="card-text mb-1">Нэвтэрсэн цаг: <span
+                                class="text-primary">{{current_user.tname.logged_in}}</span></small>
+                        <small class="card-text mb-1">Гарвал зохих цаг: <span
+                                class="text-danger">{{current_user.tname.end_time}}</span></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-7">
+            <div class="card bg-white border-0 shadow-sm mb-2">
+                <div class="card-body">
+                    <h4 class="card-text">Өнөөдөр: <span class="text-primary">{{ dtime.strftime("%m-%d, %a") }}</span>
+                    </h4>
+                    <h5 class="card-text">Таны баг: <span class="text-primary"><a
+                                href="">{{ current_user.tname.team_name }}</a></span></h5>
+                    <h2 class="card-text text-center">Гишүүдийн ирц </h2>
+                    <table class="table table-hover table-striped table-responsive-lg">
+                        <thead>
+                            {% if current_user.isAdmin %}
+                            <tr>
+                                <th scope="col">Нэр</th>
+                                <th scope="col">Баг</th>
+                                
+                                <th scope="col">Ирэх цаг</th>
+                                <th scope="col">Нийт цаг</th>
+            
+                                <th scope="col">Төлөв</th>
+                                <th scope="col">Тарах цаг</th>
+                            </tr>
+                            {% else %}
+                            <tr  class="thead-dark">
+                                <th class="align-middle text-center" scope="col">Огноо</th>
+                                
+                                <th class="align-middle text-center" scope="col">Баг</th>
+                                <th class="align-middle text-center" scope="col">Төлөв</th>
+                                <th class="align-middle text-center" scope="col">Ирсэн цаг</th>
+                                <th class="align-middle text-center" scope="col">Ирэх цаг</th>
+                                <th class="align-middle text-center" scope="col">Хоцорсон цаг</th>
+                                <th class="align-middle text-center" scope="col">Нийт цаг</th>
+                                <th class="align-middle text-center" scope="col">Явах цаг</th>
+                                <th class="align-middle text-center" scope="col">Явсан цаг</th>
+                                <th class="align-middle text-center" scope="col">Илүү цаг</th>
+                            </tr>
+                            {% endif %}
+                        </thead>
+                        <tbody>
+                            <!--Display if the current user is Admin-->
+                            {% if current_user.isAdmin %}
+                            {% for users in user_list %}
+                            <tr>
+                                <th class="align-middle text-center" scope="row"><img style="border-radius: 50%; object-fit: cover;"
+                                        src="{{url_for('static', filename = 'img/' + users.image_file)}}" height="25"
+                                        width="25" alt="">
+                                    <a class="text-info"
+                                        href="{{ url_for('visit_profile', id = users.id) }}">{{ users.fname }}</a>
+                                </th>
+                                <td class="align-middle text-center"><a href="">{{ users.tname.team_name }}</a></td>
+                                <td class="align-middle text-center">{{ users.tname.start_time }}</td>
+                                <td class="align-middle text-center">{{ users.tname.total_hour }}</td>
+                                <td class="align-middle text-center text-{{ acc_status }}">{{ users.status }}</td>
+                                <td class="align-middle text-center">{{ users.tname.end_time }}</td>
+                            </tr>
+                            {% endfor %}
+                            <!--Display if the user is default-->
+                            {% else %}
+                            
+                            
+                            {% for i in range(1, len)%} 
+                            <tr>            
+                                <td class="align-middle text-center">{{ Team[i].logged_date }}</td>
+                                <td class="align-middle text-center"><a href="">{{ Team[i].team_name }}</a></td>
+                                <td class="align-middle text-center text-{{ acc_status }}">{{ Team[i].emp.status }}</td>
+                                <td class="align-middle text-center">{{ Team[i].logged_in }}</td>
+                                <td class="align-middle text-center">{{ Team[i].start_time }}</td>
+
+                                {% if Team[i].logged_in>=Team[i].start_time %}
+                                <td class="align-middle text-center table-danger">- {{undertime[i]}}</td>
+                                {% else %}
+                                <td class="align-middle text-center table-success">+ {{undertime[i]}}</td>
+                                {% endif %}
+
+                                <td class="align-middle text-center table-info">{{ Team[i].total_hour }}</td>
+                                <td class="align-middle text-center">{{ Team[i].end_time }}</td>
+                                <td class="align-middle text-center">{{ Team[i].logged_out }}</td>
+
+                                {% if Team[i].logged_out>=Team[i].end_time %}
+                                <td class="align-middle text-center table-success">+ {{ overtime[i] }}</td>
+                                {% else %}
+                                <td class="align-middle text-center table-danger">-{{ overtime[i] }}</td>
+                                {% endif %}
+
+                            </tr>
+                            {% endfor %}
+                                                       
+                            
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            {% if current_user.isAdmin %}
+            <div class="row">
+                <div class="col">
+                    {% if day_off %}
+                    {% for req in day_off %}
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="card-title">Чөлөө авах хүсэлт</h6>
+                            <p class="card-text">Хэзээ: {{ req.date.strftime('%m-%d') }}</p>
+                            <p class="card-text">Ажилтаны нэр: <span class="text-primary">{{ req.abs.fname }}</span>
+                            </p>
+                            <p class="card-text">Баг: {{ req.abs.tname.team_name }}</p>
+                            <p class="card-text">Шалтгаан: {{ req.post }}</p>
+                            <a role="button" href="#" class="btn btn-sm btn-success card-link">Зөвшөөрөх</a>
+                            <a role="button" href="#" class="btn btn-sm btn-danger card-link">Татгалзах</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <p class="card-title text-info">Чөлөө авах хүсэлт</p>
+                            <p class="card-text">Одоогоор байхгүй байна.</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<div class="container-fluid px-5">
+    <h1 class="pb-2 mb-4 border-bottom">Хэрэглэгчийн мэдээлэл</h1>
+    <div class="row mx-auto">
+        <div class="col-3">
+            <div class="card border-0 shadow-sm">
+                <a href="{{ url_for('account') }}">
+                    <img src="{{url_for('static', filename = 'img/' + current_user.image_file)}}" alt=""
+                        class="card-img-top"> </a>
+                <div class="card-body">
+                    <div class="d-flex flex-column ">
+                        <p class="card-text mb-1">Овог: {{ current_user.lname }} </p>
+                        <p class="card-text mb-1">Нэр: {{ current_user.fname }} </p>
+                        <p class="card-text mb-1">Баг: <a href="">{{ current_user.tname.team_name }}</a></p>
+                        <p class="card-text mb-1">Цахим шуудан: <span class="text-primary">
+                                {{ current_user.email }}</span></p>
+                        <p class="card-text mb-1">Утасны дугаар:<span class="font-weight-bold">
+                                {{current_user.phone }}</span> </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{category}} alert-dismissible fade show mx-auto mb-1">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <form method="POST" class="" enctype="multipart/form-data" action="">
+                <!--CRSF token-->
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom">Ажилтаны хаягаа өөрчлөх хэсэг</legend>
+                    <div class="form-group">
+                        {{ form.profile.label() }}
+                        {{ form.profile(class="form-control-file") }}
+                        {% if form.profile.errors %}
+                        {% for error in form.profile.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.email.label(class="form-control-label") }}
+                        {% if form.email.errors %}
+                        {{ form.email(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                            <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.email(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.phone.label(class="form-control-label") }}
+                        {% if form.phone.errors %}
+                        {{ form.phone(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.phone.errors %}
+                            <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.phone(class="form-control") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-primary") }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

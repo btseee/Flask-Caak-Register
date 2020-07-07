@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<div class="container">
+    <div class="row my-5">
+        <div class="col-4">
+            <div class="card border-0 shadow-sm rounded">
+                <img class="card-img-top" height="175" src="{{url_for('static', filename = 'img/' + user.image_file)}}"
+                    alt="">
+                <div class="card-body">
+                    <h4 class="card-title">Нэр: {{ user.fname }}</h4>
+                    <p class="card-text">Цахим шуудан: {{ user.email }}</p>
+                    <p class="card-text">Утасны дугаар: {{ user.phone }}</p>
+                    <p class="card-text">Статус: <span class="text-primary">Ажилтан</span></p>
+                    <p class="card-text">Багийн нэрс: {{ user.tname.team_name }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="row">
+                <div class="col">
+                    <table class="table table-hover border bg-white">
+                        <thead>
+                            <tr class="text-muted text-center">
+                                <th scope="col">Өдрүүд</th>
+                                <th scope="col">Баг</th>
+                                <th scope="col">Ирэх</th>
+                                <th scope="col">Ирсэн</th>
+                                <th scope="col">Тарах</th>
+                                <th scope="col">Тарсан</th>
+                                <th scope="col">Нийт ажилласан</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <th scope="row">Даваа</th>
+                            <tr>
+                                <th scope="row">Мягмар</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Лхагва</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Пүрэв</th>
+                                <td>@twitter</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Баасан</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">Бямба</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">Ням</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

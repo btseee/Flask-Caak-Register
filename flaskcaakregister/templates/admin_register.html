@@ -1,0 +1,163 @@
+{% extends "layout.html" %}
+{% block main %}
+<div class="container py-3">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{category}} w-50 mx-auto mb-1 alert-dismissible fade show">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="border shadow-sm rounded bg-white w-50 my-auto mx-auto p-3">
+        <form method="POST" class="" action="">
+            <!--CRSF token-->
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+
+                <legend class="border-bottom">Ажилтаны хаяг нээх хэсэг</legend>
+                <div class="alert alert-info p-3">Админ хэрэглэгч өөрөө мөн ажилтаны хаяг нээж болно.
+                    Доор байгаа бүх мэдээллийн хүснэгтийг бөглөнө үү. Нэмэх товчийг
+                    дарсаны дараа хаяг идэвхжих болно.</div>
+                <!--Цахим шуудан-->
+                <div class="form-group">
+                    {{ form.email.label(class="form-control-label") }}
+                    <small id="emailHelp" class="text-muted">Цаашид майл хаягаараа нэвтрэх болно.</small>
+                    {% if form.email.errors %}
+                    {{ form.email(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                        <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.email(class="form-control") }}
+                    {% endif %}
+                </div>
+                <!--Ooriin ner-->
+                <div class="form-group">
+                    {{ form.fname.label(class="form-control-label") }}
+                    {% if form.fname.errors %}
+                    {{ form.fname(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.fname.errors %}
+                        <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.fname(class="form-control") }}
+                    {% endif %}
+                </div>
+                <!--Owog ner-->
+                <div class="form-group">
+                    {{ form.lname.label(class="form-control-label") }}
+                    {% if form.lname.errors %}
+                    {{ form.lname(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.lname.errors %}
+                        <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.lname(class="form-control") }}
+                    {% endif %}
+                </div>
+                <!--Utasni dugaar-->
+                <div class="form-group">
+                    {{ form.phone.label(class="form-control-label") }}
+                    {% if form.phone.errors %}
+                    {{ form.phone(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.phone.errors %}
+                        <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.phone(class="form-control") }}
+                    {% endif %}
+                </div>
+                <!--Nuuts ug-->
+                <div class="form-group">
+                    {{ form.password.label(class="form-control-label") }}
+                    {% if form.password.errors %}
+                    {{ form.password(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                        <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.password(class="form-control") }}
+                    {% endif %}
+                </div>
+                <!--Nuuts ug batalgaajuulah-->
+                <div class="form-group">
+                    {{ form.confirm_password.label(class="form-control-label") }}
+                    {% if form.confirm_password.errors %}
+                    {{ form.confirm_password(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.confirm_password.errors %}
+                        <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.confirm_password(class="form-control") }}
+                    {% endif %}
+                </div>
+                <!--Bagiin ner-->
+                <div class="form-group">
+                    {{ form.team_name.label(class="form-control-label") }}
+                    {% if form.team_name.errors %}
+                    {{ form.team_name(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.team_name.errors %}
+                        <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.team_name(class="form-control") }}
+                    {% endif %}
+                </div>
+                <!--Ajil ehleh cag-->
+                <div class="form-group">
+                    {{ form.start_time.label(class="form-control-label") }}
+                    <small id="start_time_help" class="text-muted font-weight-bold">Дараах хэлбэрээр бичнэ:
+                        13:56</small>
+                    {% if form.start_time.errors %}
+                    {{ form.start_time(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.start_time.errors %}
+                        <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.start_time(class="form-control") }}
+                    {% endif %}
+                </div>
+                <!--Niit ajillah cag-->
+                <div class="form-group">
+                    {{ form.total_hour.label(class="form-control-label") }}
+                    <small id="start_time_help" class="text-muted font-weight-bold">Дараах хэлбэрээр бичнэ:
+                        09:20</small>
+                    {% if form.total_hour.errors %}
+                    {{ form.total_hour(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.total_hour.errors %}
+                        <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.total_hour(class="form-control") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-primary btn-lg btn-block  mt-5 mb-3") }}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

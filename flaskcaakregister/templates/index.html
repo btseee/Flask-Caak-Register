@@ -1,0 +1,315 @@
+<!--
+==================================================
+|       CAAK - Цаг бүртгэлийн систем             |
+==================================================
+| Оролцогч: Б.Батцэрэн, Б.Мөнхтөр                |
+--------------------------------------------------
+|
+|
+|
+|
+==================================================
+-->
+<!DOCTYPE html>
+<html lang="MN-mn">
+<!--
+        ==================================================
+        |                  ТОЛГОЙ ХЭСЭГ                  |
+        ==================================================
+    -->
+
+<head>
+  <!--DEFAULT STUFF-->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+  <!--TAB ний зүйлүүд-->
+  <link rel=" icon" href="{{ url_for('static', filename='img/icon.ico') }}" />
+
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+
+  <!-- UIkit -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.3/dist/css/uikit.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.3/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.3/dist/js/uikit-icons.min.js"></script>
+
+  <!--FONT AWESOME-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+
+  <!--JQUERY-->
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+    integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/color/jquery.color-2.2.0.js"
+    integrity="sha256-gvMJWDHjgDrVSiN6eBI9h7dRfQmsTTsGU/eTT8vpzNg=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/qunit/qunit-2.10.0.js"
+    integrity="sha256-X1fQXHSYGxa4V2bqkEAQW0DQGSxJrKveasahr959o28=" crossorigin="anonymous"></script>
+
+  <!--BOOTSTRAP-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&display=swap" rel="stylesheet" />
+
+  <!--LOCAL LIBRARIES-->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+
+  {% if title %}
+  <title>Caak - {{ title }}</title>
+  {% else %}
+  <title>Caak - Мэдлэгээс илүү</title>
+  {% endif %}
+</head>
+<!--
+        ==================================================
+        |                 ЕРӨНХИЙ ХЭСЭГ                  |
+        ==================================================
+    -->
+
+<body>
+  <!--
+        ===============
+        ТОЛГОЙЛОХ ХЭСЭГ
+        ===============
+    -->
+  <div uk-sticky="sel-target: .uk-navbar-container;">
+    <nav class="uk-navbar-container" uk-navbar>
+      <div class="uk-navbar-center">
+        <ul class="uk-navbar-nav">
+          <li class="uk-active">
+            <a href="JavaScript: location.reload(true);" style="
+                  font-size: 3.5rem;
+                  font-family: 'Bowlby One SC', cursive;
+                ">CAAK</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <!--
+        ===============
+        ИХ БИЕНИЙ ХЭСЭГ
+        ===============
+    -->
+
+  <div class="uk-section uk-section-muted uk-flex uk-flex-middle uk-animation-shake" uk-height-viewport>
+    <div class="uk-width-1-1">
+      <div class="uk-container">
+        <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid>
+          <div class="uk-width-1-1m">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %} {% for category, message in messages %}
+            <div class="alert alert-{{category}} w-50 mx-auto mb-1 alert-dismissible fade show">
+              {{ message }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </div>
+            {% endfor %} {% endif %} {% endwith %}
+            <div
+              class="uk-margin uk-width-large uk-margin-auto uk-card uk-card-default uk-card-body uk-box-shadow-large"
+              style="border-radius: 10px;">
+              <h3 class="uk-card-title uk-text-center"></h3>
+              <form method="POST">
+                <!--Secret key-->
+                {{ form.hidden_tag() }}
+                <legend class=" text-center mb-3" style="font-size: 2.1rem;">
+                  Хаягаараа нэвтэрч цагаа бүртгүүлнэ үү.
+                </legend>
+
+                <div class="form-group">
+                  {{ form.email.label(class="form-control-label") }}
+                  {% if form.email.errors %}
+                  {{ form.email(class="form-control-is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                    <span>{{error}}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} 
+                  {{ form.email(class="form-control") }}
+                  {% endif %}
+                </div>
+
+                <div class="form-group mb-4">
+                  {{ form.password.label(class="form-control-label") }} 
+                  {% if form.password.errors %} 
+                  {{ form.password(class="form-control-is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.password.errors %}
+                    <span>{{error}}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} 
+                  {{ form.password(class="form-control") }} 
+                  {% endif %}
+                </div>
+                <div class="row mb-4">
+                  <div class="col">
+                    <div class="form-check grow">
+                      {{ form.remember(class="form-check-input") }} {{
+                        form.remember.label(class="form-check-label") }}
+                    </div>
+                  </div>
+                  <div class="col">
+                    <small class="text-muted ml-4"><a href="#" style="text-decoration: none;"> Нууц үгээ мартсан уу?
+                      </a></small>
+                  </div>
+                </div>
+                <div class="form-group my-2">
+                  {{ form.submit(class="btn btn-outline-primary btn-lg btn-block mb-4") }}
+                </div>
+
+                <div class="uk-text-small uk-text-center uk-text-bold grow">
+                  Шинэ ажилтан уу?
+                  <a href="{{ url_for('register') }}" style="text-decoration: none;"><span
+                      class="uk-icon uk-margin-small-right" uk-icon="icon: users"></span>Бүртгүүлэх</a>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--
+        =============
+        СҮҮЛИЙН ХЭСЭГ
+        =============
+    -->
+
+  <!-- Footer -->
+  <footer class="page-footer font-small mdb-color lighten-3 pt-4">
+    <!-- Footer Links -->
+    <div class="container text-center text-md-left">
+      <!-- Grid row -->
+      <div class="row">
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 mr-auto my-md-4 my-0 mt-4 mb-1">
+          <!-- Content -->
+          <h5 class="font-weight-bold text-uppercase mb-4">
+            CAAK HOLDING LLC
+          </h5>
+          <p>Ажилчдын цаг бүртгэл хийхэд зориулав.</p>
+          <p>Ер нь зүгээр саак байцгаая л даа!</p>
+        </div>
+        <!-- Grid column -->
+
+        <hr class="clearfix w-100 d-md-none" />
+
+        <!-- Grid column -->
+        <div class="col-md-2 col-lg-2 mx-auto my-md-4 my-0 mt-4 mb-1">
+          <!-- Links -->
+          <h5 class="font-weight-bold text-uppercase mb-4">Тусламж</h5>
+
+          <ul class="list-unstyled">
+            <li>
+              <p>
+                <a href="#!">Системийн тухай</a>
+              </p>
+            </li>
+            <li>
+              <p>
+                <a href="#!">Хийсэн баг</a>
+              </p>
+            </li>
+            <li>
+              <p>
+                <a href="#!">Блог</a>
+              </p>
+            </li>
+            <li>
+              <p>
+                <a href="#!">Шаардлагатай зүйлс</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <!-- Grid column -->
+
+        <hr class="clearfix w-100 d-md-none" />
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 mx-auto my-md-4 my-0 mt-4 mb-1">
+          <!-- Contact details -->
+          <h5 class="font-weight-bold text-uppercase mb-4">Хаяг</h5>
+
+          <ul class="list-unstyled">
+            <li>
+              <p>
+                <i class="fas fa-home mr-3"></i>Монгол улс, Улаанбаатар хот,
+                Хан-Уул дүүрэг, 11-р хороо "Кинг Тауэр" хотхон 121-р байр 101
+                тоо
+              </p>
+            </li>
+            <li>
+              <p><i class="fas fa-envelope mr-3"></i> info@caak.mn</p>
+            </li>
+            <li>
+              <p><i class="fas fa-phone mr-3"></i> + 976 91912840</p>
+            </li>
+            <li>
+              <p><i class="fas fa-print mr-3"></i> + 976 91912840</p>
+            </li>
+          </ul>
+        </div>
+        <!-- Grid column -->
+
+        <hr class="clearfix w-100 d-md-none" />
+
+        <!-- Grid column -->
+        <div class="col-md-2 col-lg-2 text-center mx-auto my-4">
+          <!-- Social buttons -->
+          <h5 class="font-weight-bold text-uppercase mb-4">
+            Сошиал холбоосууд
+          </h5>
+
+          <!-- Facebook -->
+          <a type="button" class="btn-floating btn-fb">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <!-- Twitter -->
+          <a type="button" class="btn-floating btn-tw">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <!-- Google +-->
+          <a type="button" class="btn-floating btn-gplus">
+            <i class="fab fa-google-plus-g"></i>
+          </a>
+          <!-- Dribbble -->
+          <a type="button" class="btn-floating btn-dribbble">
+            <i class="fab fa-dribbble"></i>
+          </a>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+    <!-- Footer Links -->
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">
+      ©2020 он Оюуны өмч:
+      <a href="https://www.facebook.com/btseku1125" style="text-decoration: none;">
+        Б.Батцэрэн</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+  <!-- Footer -->
+</body>
+
+</html>
