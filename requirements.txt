@@ -1,0 +1,8 @@
+flask
+email_validator
+wtforms==2.3.3
+wtforms-html5
+flask_login
+flask_sqlalchemy
+flask_bcrypt
+flask_wtf
